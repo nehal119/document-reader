@@ -175,14 +175,6 @@ function PricingContent() {
               href="#"
               sx={{ my: 1, mx: 1.5 }}
             >
-              Most Read
-            </Link>
-            <Link
-              variant="button"
-              color="text.primary"
-              href="#"
-              sx={{ my: 1, mx: 1.5 }}
-            >
               Add New
             </Link>
             <Link

@@ -1,4 +1,7 @@
 import * as React from 'react';
+import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -32,15 +35,24 @@ export default function SignIn() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    axios.post("http://localhost:3001/login", {
+      username: data.get('email'),
+      password: data.get('password')
+    })
+    .then(res => {
+      window.localStorage.setItem('document-reader', JSON.stringify('DjQ#THUWvFBaBh%55AVZWmUTYr$2haJ!es@rMzaXWaQfRCEi*SzpPD6i3h#%BGHYepPpHE@97NhE$VdWhGHuQUEM&$GMM5$35CGv!DT$Tj5$$weFAet5Lbtg42TWWku3'))
+      toast.success('Success!!!');
+      window.location.href = '/home';
+    })
+    .catch(err => {
+      window.localStorage.removeItem("document-reader");
+      toast.error('Authentication error')
+    })
   };
 
   return (
     <ThemeProvider theme={theme}>
+      <ToastContainer />
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -98,7 +110,7 @@ export default function SignIn() {
               </Grid>
               <Grid item>
                 <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                  {"Sign Up?"}
                 </Link>
               </Grid>
             </Grid>

@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const fs = require("fs");
 const helmet = require("helmet");
 const compression = require("compression");
 const dotenv = require("dotenv");
@@ -15,7 +16,7 @@ app.use(cors("*"));
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'public')
+    cb(null, 'uploads')
   },
   filename: function (req, file, cb) {
     cb(null, Date.now() + '-' +file.originalname )
@@ -29,7 +30,28 @@ app.get("/", (req, res) => {
   res.send("Server is up and running");
 });
 
-app.get("/login", (req, res) => {
+app.get("/files", (req, res) => {
+  fs.readdir('uploads', (err, files) => {
+    files.forEach(file => {
+      console.log(file);
+    });
+    res.status(200);
+    res.send(files);
+  });
+});
+
+app.get("/files/:id", (req, res) => {
+  fs.readdir('uploads', (err, files) => {
+    files.forEach(file => {
+      console.log(file);
+    });
+    res.status(200);
+    res.send(files);
+  });
+});
+
+app.post("/login", (req, res) => {
+  console.log(req.body);
   const { username, password} = req.body;
   if (!username || !password) {
     res.status(401);

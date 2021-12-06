@@ -11,7 +11,6 @@ class FileUpload extends Component {
         selectedFile: null,
         loaded:0
       }
-   
   }
   checkMimeType=(event)=>{
     //getting file object
@@ -76,7 +75,7 @@ onChangeHandler=event=>{
     for(var x = 0; x<this.state.selectedFile.length; x++) {
       data.append('file', this.state.selectedFile[x])
     }
-    axios.post("http://localhost:8000/upload", data, {
+    axios.post("http://localhost:3001/upload", data, {
       onUploadProgress: ProgressEvent => {
         this.setState({
           loaded: (ProgressEvent.loaded / ProgressEvent.total*100),
@@ -96,18 +95,15 @@ onChangeHandler=event=>{
       <div class="container">
 	      <div class="row">
       	  <div class="offset-md-3 col-md-6">
-               <div class="form-group files">
-                <label>Upload Your File </label>
-                <input type="file" class="form-control" multiple onChange={this.onChangeHandler}/>
-              </div>  
-              <div class="form-group">
-              <ToastContainer />
-              <Progress max="100" color="success" value={this.state.loaded} >{Math.round(this.state.loaded,2) }%</Progress>
-        
-              </div> 
-              
-              <button type="button" class="btn btn-success btn-block" onClick={this.onClickHandler}>Upload</button>
-
+            <div class="form-group files">
+            <label>Upload Your File </label>
+            <input type="file" class="form-control" multiple onChange={this.onChangeHandler}/>
+            </div>  
+            <div class="form-group">
+            <ToastContainer />
+            <Progress max="100" color="success" value={this.state.loaded} >{Math.round(this.state.loaded,2) }%</Progress>
+            </div>
+            <button type="button" class="btn btn-success btn-block" onClick={this.onClickHandler}>Upload</button>
 	      </div>
       </div>
       </div>
