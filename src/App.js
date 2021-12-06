@@ -1,43 +1,19 @@
 import * as React from 'react';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
-import ProTip from './ProTip';
-// import { MyApp } from './Pdf';
-import Sample from './Pdf2';
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://github.com/nehal119/">
-        Nehal Ahmad
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import { Routes, Route, Link } from "react-router-dom";
+import SignIn from './SignIn';
+import Pricing from './Pricing';
+import Album from './Album';
+import FileUpload from './FileUpload';
 
 export default function App() {
   return (
-    <>
-      <Container maxWidth="sm">
-        <Box sx={{ my: 4 }}>
-          <Typography variant="h4" component="h1" gutterBottom>
-            Simple Document Reader
-          </Typography>
-        </Box>
-      </Container>
-    <Container maxWidth="sm">
-      <Sample />
-    </Container>
-    <Container maxWidth="sm">
-      <Box sx={{ my: 4 }}>
-        <Copyright />
-      </Box>
-    </Container>
-    </>
+    <div className="App">
+      <Routes>
+        <Route path="/" element={<SignIn />} />
+        <Route path="about" element={<Pricing />} />
+        <Route path="more" element={<Album />} />
+        <Route path="upload" element={<FileUpload />} />
+      </Routes>
+    </div>
   );
 }
