@@ -14,6 +14,8 @@ import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import Container from '@mui/material/Container';
+import { toast, ToastContainer } from 'react-toastify';
+import FileUpload from './FileUpload';
 
 function Copyright(props) {
   return (
@@ -41,19 +43,6 @@ const tiers = [
     buttonText: 'Sign up for free',
     buttonVariant: 'outlined',
   },
-  // {
-  //   title: 'Pro',
-  //   subheader: 'Most popular',
-  //   price: '15',
-  //   description: [
-  //     '20 users included',
-  //     '10 GB of storage',
-  //     'Help center access',
-  //     'Priority email support',
-  //   ],
-  //   buttonText: 'Get started',
-  //   buttonVariant: 'contained',
-  // },
   {
     title: 'Enterprise',
     price: '30',
@@ -153,11 +142,17 @@ const footers = [
   },
 ];
 
-function PricingContent() {
+export default function Pricing(props) {
+  const onLoggedOut = () => {
+    window.localStorage.removeItem("document-reader");
+    toast.success('User logged out')
+    props.onLoggedOut();
+  }
   return (
     <React.Fragment>
       <GlobalStyles styles={{ ul: { margin: 0, padding: 0, listStyle: 'none' } }} />
       <CssBaseline />
+      <ToastContainer />
       <AppBar
         position="static"
         color="default"
@@ -169,24 +164,26 @@ function PricingContent() {
             Document Reader
           </Typography>
           <nav>
-            <Link
+            <Button
               variant="button"
               color="text.primary"
               href="#"
               sx={{ my: 1, mx: 1.5 }}
+              onClick={props.updateIdx(1)}
             >
-              Add New
-            </Link>
-            <Link
+              Upload
+            </Button>
+            <Button
               variant="button"
               color="text.primary"
-              href="#"
+              target="_blank"
+              href="https://github.com/nehal119/document-reader/issues/new/choose"
               sx={{ my: 1, mx: 1.5 }}
             >
               File a Bug
-            </Link>
+            </Button>
           </nav>
-          <Button href="#" variant="outlined" sx={{ my: 1, mx: 1.5 }}>
+          <Button variant="outlined" sx={{ my: 1, mx: 1.5 }} onClick={onLoggedOut}>
             Logout
           </Button>
         </Toolbar>
@@ -198,7 +195,7 @@ function PricingContent() {
         }}
       >
         <Grid container spacing={5} alignItems="flex-end">
-          {tiers.map((tier) => (
+          {props.currIdx === 0 && tiers.map((tier) => (
             // Enterprise card is full width at sm breakpoint
             <Grid
               item
@@ -260,29 +257,23 @@ function PricingContent() {
               </Card>
             </Grid>
           ))}
+          {props.currIdx === 1 && <FileUpload />}
         </Grid>
       </Container>
 
       {/* Footer */}
       <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
-        <Typography variant="h6" align="center" gutterBottom>
-          Cheers
-        </Typography>
         <Typography
           variant="subtitle1"
           align="center"
           color="text.secondary"
           component="p"
         >
-          Synced with Google Drive
+          Powered by React & Node
         </Typography>
         <Copyright />
       </Box>
       {/* End footer */}
     </React.Fragment>
   );
-}
-
-export default function Pricing() {
-  return <PricingContent />;
 }

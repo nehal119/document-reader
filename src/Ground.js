@@ -22,10 +22,29 @@ export class Ground extends React.PureComponent {
     }
   }
 
+  // componentDidUpdate(prevProps) {
+  //   console.log(prevProps);
+  // }
+
+  onLoggedOut = () => {
+    this.setState({
+      ...this.state,
+      loggedIn: false
+    });
+  }
+  updateIdx = (idx) => {
+    this.setState({
+      ...this.state,
+      currIdx: idx
+    });
+  }
   render () {
+    if (!this.state.loggedIn) {
+      return <h1>Loading...</h1>
+    }
     return (
       <div>
-        <Pricing />
+        <Pricing currIdx={this.state.currIdx} updateIdx={this.updateIdx} onLoggedOut={this.onLoggedOut} />
       </div>
     );
   }
