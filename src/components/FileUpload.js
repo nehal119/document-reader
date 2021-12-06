@@ -16,6 +16,7 @@ class FileUpload extends Component {
     super(props);
     this.state = {
       selectedFile: null,
+      selectedCover: null,
       loaded: 0,
       fileName: '',
     };
@@ -41,9 +42,12 @@ class FileUpload extends Component {
   onClickHandler = () => {
     console.log(this.state);
     const data = new FormData();
-    for (var x = 0; x < this.state.selectedFile.length; x++) {
-      data.append("file", this.state.selectedFile[x]);
-    }
+    // for (var x = 0; x < this.state.selectedFile.length; x++) {
+    //   data.append("file", this.state.selectedFile[x]);
+    // }
+    // Upload only first file
+    data.append("file", this.state.selectedFile[0]);
+    data.append("file", this.state.selectedCover[0]);
     axios
       .post("http://localhost:3001/upload", data, {
         onUploadProgress: (ProgressEvent) => {
@@ -54,6 +58,18 @@ class FileUpload extends Component {
       })
       .then(() => {
         toast.success("upload success");
+        axios
+        .post("http://localhost:3001/updateuser", {
+          name: this.state.fileName,
+          cover: this.state.selectedCover[0].name,
+          file: this.state.selectedFile[0].name,
+        })
+        .then(() => {
+          toast.success("files saved in database");
+        })
+        .catch(() => {
+          toast.error("upload fail");
+        });
       })
       .catch(() => {
         toast.error("upload fail");
@@ -89,7 +105,7 @@ class FileUpload extends Component {
             sx={{ mt: 1 }}
           >
           <Typography component="h2" variant="h6">
-            Document File
+            File
           </Typography>
           <DropZone
           baseStyle={{ marginTop: 'none' }}
@@ -106,7 +122,7 @@ class FileUpload extends Component {
             }
           }}
         >
-          <p style={{ margin: 0, fontSize: 18, color: '#ccccdc' }}>
+          <p style={{ margin: 0, fontSize: 18, color: '#f4f4f4' }}>
             Drop the file here, or click to use the file explorer
           </p>
         </DropZone>
@@ -115,7 +131,7 @@ class FileUpload extends Component {
             sx={{ mt: 1 }}
           >
         <Typography component="h2" variant="h6">
-            Document Cover
+          Cover
         </Typography>
         <DropZone
           baseStyle={{ marginTop: 'none' }}
@@ -126,13 +142,12 @@ class FileUpload extends Component {
             if (this.checkMimeType(files)) {
               this.setState({
                 ...this.state,
-                selectedFile: files,
-                loaded: 0,
+                selectedCover: files,
               });
             }
           }}
         >
-          <p style={{ margin: 0, fontSize: 18, color: '#ccccdc' }}>
+          <p style={{ margin: 0, fontSize: 18, color: '#f4f4f4' }}>
             Drop the file here, or click to use the file explorer
           </p>
         </DropZone>
@@ -145,7 +160,7 @@ class FileUpload extends Component {
           // variant="button"
           variant="outlined"
           href="#"
-          sx={{ my: 1, mx: 1.5 }}
+          sx={{ my: 1 }}
           onClick={this.onClickHandler}
         >
           Upload
