@@ -10,8 +10,9 @@ exports.user_add = function (req, res) {
   newUser.save(function (err, newUser) {
     if (err) {
       res.status(400);
+      return;
     }
-    res.json({ success: true, message: "User added", item: newUser });
+    res.status(200).json({ success: true, message: "User added", item: newUser });
   });
 };
 
@@ -21,9 +22,9 @@ exports.file_add = function (req, res) {
       res.status(400).json(err)
       return;
     }
-    user.files = user.files.push(req.body);
-    user.markModified('brackets.rounds');
-    //save the model
+    console.log(user);
+    user.files.push(req.body);
+    // user.markModified('brackets.rounds');
     user.save().then( () => {
       res.status(200).json('Info saved')
     }
@@ -31,22 +32,6 @@ exports.file_add = function (req, res) {
       res.status(400).json(err)
     })
   });
-  // User.findByIdAndUpdate(
-  //   req.params.id,
-  //   { $set: {
-  //     files: { $push: {} }
-  //   } },
-  //   function (err, user) {
-  //     if (err) return res.send(err);
-  //     res.status(200);
-  //     res.json({
-  //       success: true,
-  //       message: "user updated",
-  //       item: user,
-  //     });
-  //     res.end();
-  //   }
-  // );
 };
 
 // exports.users_list = function (req, res) {

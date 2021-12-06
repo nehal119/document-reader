@@ -10,11 +10,7 @@ const User = new Schema({
     type: String,
     required: true,
   },
-  files: [{
-    name: String,
-    cover: String,
-    file: String,
-  }],
+  files: [],
   timestamp: {
     type: Date,
     default: Date.now,

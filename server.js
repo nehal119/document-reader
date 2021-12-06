@@ -6,7 +6,19 @@ const helmet = require("helmet");
 const compression = require("compression");
 const dotenv = require("dotenv");
 var multer = require("multer");
+const userController = require('./db/controllers/user');
 dotenv.config();
+
+const mongoose = require("mongoose");
+
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+mongoose.Promise = global.Promise;
+
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "MongoDB connection error:"));
 
 app.use(express.json());
 app.use(helmet());
@@ -48,6 +60,9 @@ app.post("/login", (req, res) => {
   return;
 });
 
+app.post("/add/user", userController.user_add);
+app.post("/add/file/:id", userController.file_add);
+
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "uploads");
@@ -71,4 +86,9 @@ app.post("/upload", function (req, res) {
   });
 });
 
-app.listen(3001, () => console.log(`Listening at http://localhost:3001`));
+db.once("open", function () {
+  console.log("Connected!");
+  app.listen(3001, () =>
+    console.log(`Listening at http://localhost:3001`)
+  );
+});
