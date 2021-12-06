@@ -1,6 +1,6 @@
-import axios from 'axios';
-import * as React from 'react';
-import Home from './Home';
+import axios from "axios";
+import * as React from "react";
+import Home from "./Home";
 
 export class Ground extends React.PureComponent {
   constructor(props) {
@@ -9,34 +9,39 @@ export class Ground extends React.PureComponent {
       loggedIn: false,
       currIdx: 0,
       files: [],
-      currFile: '',
-    }
+      currFile: "",
+    };
   }
 
   componentWillMount() {
-    const item = window.localStorage.getItem('document-reader')
-    if (item && JSON.parse(item) === 'DjQ#THUWvFBaBh%55AVZWmUTYr$2haJ!es@rMzaXWaQfRCEi*SzpPD6i3h#%BGHYepPpHE@97NhE$VdWhGHuQUEM&$GMM5$35CGv!DT$Tj5$$weFAet5Lbtg42TWWku3') {
+    const item = window.localStorage.getItem("document-reader");
+    if (
+      item &&
+      JSON.parse(item) ===
+        "DjQ#THUWvFBaBh%55AVZWmUTYr$2haJ!es@rMzaXWaQfRCEi*SzpPD6i3h#%BGHYepPpHE@97NhE$VdWhGHuQUEM&$GMM5$35CGv!DT$Tj5$$weFAet5Lbtg42TWWku3"
+    ) {
       this.setState({
         ...this.state,
-        loggedIn: true
+        loggedIn: true,
       });
     } else {
-      window.location.href = '/';
+      window.location.href = "/";
     }
   }
 
   componentDidMount() {
-    axios.get("http://localhost:3001/files")
-      .then(res => {
+    axios
+      .get("http://localhost:3001/files")
+      .then((res) => {
         console.log(res);
         this.setState({
           ...this.state,
-          files: res.data
-        })
+          files: res.data,
+        });
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
-      })
+      });
   }
 
   // componentDidUpdate(prevProps) {
@@ -46,25 +51,25 @@ export class Ground extends React.PureComponent {
   onLoggedOut = () => {
     this.setState({
       ...this.state,
-      loggedIn: false
+      loggedIn: false,
     });
-  }
+  };
   updateIdx = (idx) => {
     this.setState({
       ...this.state,
-      currIdx: idx
+      currIdx: idx,
     });
-  }
+  };
   updateCurrFile = (fileName) => {
     this.setState({
       ...this.state,
       currFile: fileName,
       currIdx: 2,
     });
-  } 
-  render () {
+  };
+  render() {
     if (!this.state.loggedIn) {
-      return <h1>Loading...</h1>
+      return <h1>Loading...</h1>;
     }
     return (
       <div>

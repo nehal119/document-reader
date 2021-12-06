@@ -1,11 +1,11 @@
-import * as React from 'react';
-import ReactDOM from 'react-dom';
-import CssBaseline from '@mui/material/CssBaseline';
-import { ThemeProvider } from '@mui/material/styles';
+import * as React from "react";
+import ReactDOM from "react-dom";
+import CssBaseline from "@mui/material/CssBaseline";
+import { ThemeProvider } from "@mui/material/styles";
 import { BrowserRouter } from "react-router-dom";
-import App from './App';
-import theme from './theme';
-import 'react-toastify/dist/ReactToastify.css';
+import App from "./App";
+import theme from "./theme";
+import "react-toastify/dist/ReactToastify.css";
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>
@@ -15,5 +15,5 @@ ReactDOM.render(
       <App />
     </BrowserRouter>
   </ThemeProvider>,
-  document.querySelector('#root'),
+  document.querySelector("#root")
 );

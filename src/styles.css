@@ -3,12 +3,13 @@
   background-color: #525659;
   font-family: Segoe UI, Tahoma, sans-serif;
 } */
-.Example input, .Example button {
+.Example input,
+.Example button {
   font: inherit;
 }
 .Example header {
   background-color: #323639;
-  box-shadow: 0 0 8px rgba(0,0,0,0.5);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
   padding: 20px;
   color: rgba(0, 0, 0, 0.87);
 }
@@ -37,7 +38,7 @@
 }
 .Example__container__document .react-pdf__Page {
   max-width: calc(100%);
-  box-shadow: 0 0 8px rgba(0,0,0,0.5);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
   margin: 1em;
   width: 100%;
 }
@@ -50,6 +51,6 @@
   padding: 20px;
   color: rgba(0, 0, 0, 0.87);
 }
-.Example{
+.Example {
   margin: auto !important;
 }

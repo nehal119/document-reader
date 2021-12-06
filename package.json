@@ -6,7 +6,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint src/**/*.js server.js",
+    "pretty": "prettier --write ."
   },
   "dependencies": {
     "@emotion/react": "latest",
@@ -27,6 +29,11 @@
     "react-scripts": "latest",
     "react-toastify": "^8.1.0",
     "reactstrap": "^9.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.11.0",
+    "eslint-plugin-react": "^7.27.1",
+    "prettier": "^2.1.2"
   },
   "browserslist": {
     "production": [

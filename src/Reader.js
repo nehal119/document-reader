@@ -1,21 +1,23 @@
-import React, { useState } from 'react';
-import { Document, Page } from 'react-pdf/dist/esm/entry.webpack';
-import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
+import React, { useState } from "react";
+import { Document, Page } from "react-pdf/dist/esm/entry.webpack";
+import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 
-import './styles.css';
+import "./styles.css";
 
 const options = {
-  cMapUrl: 'cmaps/',
+  cMapUrl: "cmaps/",
   cMapPacked: true,
 };
 
 export default function Reader(props) {
-  const [file, setFile] = useState('http://localhost:3001/file/'+ props.currFile);
+  const [file, setFile] = useState(
+    "http://localhost:3001/file/" + props.currFile
+  );
   const [numPages, setNumPages] = useState(null);
 
-  function onFileChange(event) {
-    setFile(event.target.files[0]);
-  }
+  // function onFileChange(event) {
+  //   setFile(event.target.files[0]);
+  // }
 
   function onDocumentLoadSuccess({ numPages: nextNumPages }) {
     setNumPages(nextNumPages);
@@ -38,21 +40,12 @@ export default function Reader(props) {
             onLoadSuccess={onDocumentLoadSuccess}
             options={options}
           >
-            {
-              Array.from(
-                new Array(numPages),
-                (el, index) => (
-                  <Page
-                    key={`page_${index + 1}`}
-                    pageNumber={index + 1}
-                  />
-                ),
-              )
-            }
+            {Array.from(new Array(numPages), (el, index) => (
+              <Page key={`page_${index + 1}`} pageNumber={index + 1} />
+            ))}
           </Document>
         </div>
       </div>
     </div>
   );
 }
-
