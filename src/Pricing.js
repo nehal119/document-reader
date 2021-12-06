@@ -14,8 +14,10 @@ import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import Container from '@mui/material/Container';
+import CardMedia from '@mui/material/CardMedia';
 import { toast, ToastContainer } from 'react-toastify';
 import FileUpload from './FileUpload';
+import Reader from './Reader';
 
 function Copyright(props) {
   return (
@@ -30,124 +32,13 @@ function Copyright(props) {
   );
 }
 
-const tiers = [
-  {
-    title: 'Free',
-    price: '0',
-    description: [
-      '10 users included',
-      '2 GB of storage',
-      'Help center access',
-      'Email support',
-    ],
-    buttonText: 'Sign up for free',
-    buttonVariant: 'outlined',
-  },
-  {
-    title: 'Enterprise',
-    price: '30',
-    description: [
-      '50 users included',
-      '30 GB of storage',
-      'Help center access',
-      'Phone & email support',
-    ],
-    buttonText: 'Contact us',
-    buttonVariant: 'outlined',
-  },
-  {
-    title: 'Enterprise',
-    price: '30',
-    description: [
-      '50 users included',
-      '30 GB of storage',
-      'Help center access',
-      'Phone & email support',
-    ],
-    buttonText: 'Contact us',
-    buttonVariant: 'outlined',
-  },
-  {
-    title: 'Enterprise',
-    price: '30',
-    description: [
-      '50 users included',
-      '30 GB of storage',
-      'Help center access',
-      'Phone & email support',
-    ],
-    buttonText: 'Contact us',
-    buttonVariant: 'outlined',
-  },
-  {
-    title: 'Enterprise',
-    price: '30',
-    description: [
-      '50 users included',
-      '30 GB of storage',
-      'Help center access',
-      'Phone & email support',
-    ],
-    buttonText: 'Contact us',
-    buttonVariant: 'outlined',
-  },
-  {
-    title: 'Enterprise',
-    price: '30',
-    description: [
-      '50 users included',
-      '30 GB of storage',
-      'Help center access',
-      'Phone & email support',
-    ],
-    buttonText: 'Contact us',
-    buttonVariant: 'outlined',
-  },
-  {
-    title: 'Enterprise',
-    price: '30',
-    description: [
-      '50 users included',
-      '30 GB of storage',
-      'Help center access',
-      'Phone & email support',
-    ],
-    buttonText: 'Contact us',
-    buttonVariant: 'outlined',
-  },
-];
-
-const footers = [
-  {
-    title: 'Genre',
-    description: ['Team', 'History', 'Contact us', 'Locations'],
-  },
-  {
-    title: 'About Us',
-    description: [
-      'Cool stuff',
-      'Random feature',
-      'Team feature',
-      'Developer stuff',
-      'Another one',
-    ],
-  },
-  {
-    title: 'Resources',
-    description: ['Resource', 'Resource name', 'Another resource', 'Final resource'],
-  },
-  {
-    title: 'Contact',
-    description: ['Privacy policy', 'Terms of use'],
-  },
-];
-
 export default function Pricing(props) {
   const onLoggedOut = () => {
     window.localStorage.removeItem("document-reader");
     toast.success('User logged out')
     props.onLoggedOut();
   }
+
   return (
     <React.Fragment>
       <GlobalStyles styles={{ ul: { margin: 0, padding: 0, listStyle: 'none' } }} />
@@ -164,15 +55,26 @@ export default function Pricing(props) {
             Document Reader
           </Typography>
           <nav>
-            <Button
-              variant="button"
-              color="text.primary"
-              href="#"
-              sx={{ my: 1, mx: 1.5 }}
-              onClick={props.updateIdx(1)}
-            >
-              Upload
-            </Button>
+            {props.currIdx === 0 && <Button
+                variant="button"
+                color="text.primary"
+                href="#"
+                sx={{ my: 1, mx: 1.5 }}
+                onClick={() => props.updateIdx(1)}
+              >
+                Upload
+              </Button>
+            }
+            {(props.currIdx === 1 || props.currIdx === 2) && <Button
+                variant="button"
+                color="text.primary"
+                href="#"
+                sx={{ my: 1, mx: 1.5 }}
+                onClick={() => props.updateIdx(0)}
+              >
+                Home
+              </Button>
+            }
             <Button
               variant="button"
               color="text.primary"
@@ -195,21 +97,20 @@ export default function Pricing(props) {
         }}
       >
         <Grid container spacing={5} alignItems="flex-end">
-          {props.currIdx === 0 && tiers.map((tier) => (
+          {props.currIdx === 0 && props.files.map((file, idx) => (
             // Enterprise card is full width at sm breakpoint
             <Grid
               item
-              key={tier.title}
+              key={idx}
               xs={12}
-              sm={tier.title === 'Enterprise' ? 12 : 6}
+              sm={6}
               md={4}
             >
               <Card>
                 <CardHeader
-                  title={tier.title}
-                  subheader={tier.subheader}
+                  title={file.substr(0, 10) + '...'}
+                  // subheader={tier.subheader}
                   titleTypographyProps={{ align: 'center' }}
-                  action={tier.title === 'Pro' ? <StarIcon /> : null}
                   subheaderTypographyProps={{
                     align: 'center',
                   }}
@@ -221,47 +122,31 @@ export default function Pricing(props) {
                   }}
                 />
                 <CardContent>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'baseline',
-                      mb: 2,
-                    }}
-                  >
-                    <Typography component="h2" variant="h3" color="text.primary">
-                      ${tier.price}
-                    </Typography>
-                    <Typography variant="h6" color="text.secondary">
-                      /mo
-                    </Typography>
-                  </Box>
-                  <ul>
-                    {tier.description.map((line) => (
-                      <Typography
-                        component="li"
-                        variant="subtitle1"
-                        align="center"
-                        key={line}
-                      >
-                        {line}
-                      </Typography>
-                    ))}
-                  </ul>
+                  <CardMedia
+                    component="img"
+                    // sx={{
+                    //   // 16:9
+                    //   pt: '56.25%',
+                    // }}
+                    image="https://source.unsplash.com/random"
+                    alt="random"
+                  />
                 </CardContent>
                 <CardActions>
-                  <Button fullWidth variant={tier.buttonVariant}>
-                    {tier.buttonText}
+                  <Button fullWidth variant="outlined"
+                    onClick={() => props.updateCurrFile(file)}
+                  >
+                    Open
                   </Button>
                 </CardActions>
               </Card>
             </Grid>
           ))}
           {props.currIdx === 1 && <FileUpload />}
+          {props.currIdx === 2 && <Reader currFile={props.currFile} />}
         </Grid>
       </Container>
 
-      {/* Footer */}
       <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
         <Typography
           variant="subtitle1"
@@ -273,7 +158,6 @@ export default function Pricing(props) {
         </Typography>
         <Copyright />
       </Box>
-      {/* End footer */}
     </React.Fragment>
   );
 }

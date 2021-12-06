@@ -36,15 +36,20 @@
   align-items: center;
 }
 .Example__container__document .react-pdf__Page {
-  max-width: calc(100% - 2em);
+  max-width: calc(100%);
   box-shadow: 0 0 8px rgba(0,0,0,0.5);
   margin: 1em;
+  width: 100%;
 }
 .Example__container__document .react-pdf__Page canvas {
   max-width: 100%;
   height: auto !important;
+  width: 100%;
 }
 .Example__container__document .react-pdf__message {
   padding: 20px;
   color: rgba(0, 0, 0, 0.87);
+}
+.Example{
+  margin: auto !important;
 }

@@ -9,8 +9,8 @@ const options = {
   cMapPacked: true,
 };
 
-export default function Sample() {
-  const [file, setFile] = useState('./file.pdf');
+export default function Reader(props) {
+  const [file, setFile] = useState('http://localhost:3001/file/'+ props.currFile);
   const [numPages, setNumPages] = useState(null);
 
   function onFileChange(event) {
@@ -24,14 +24,14 @@ export default function Sample() {
   return (
     <div className="Example">
       <div className="Example__container">
-        <div className="Example__container__load">
+        {/* <div className="Example__container__load">
           <label htmlFor="file">Load from file:</label>
           {' '}
           <input
             onChange={onFileChange}
             type="file"
           />
-        </div>
+        </div> */}
         <div className="Example__container__document">
           <Document
             file={file}

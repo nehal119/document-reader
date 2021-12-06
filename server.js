@@ -40,18 +40,12 @@ app.get("/files", (req, res) => {
   });
 });
 
-app.get("/files/:id", (req, res) => {
-  fs.readdir('uploads', (err, files) => {
-    files.forEach(file => {
-      console.log(file);
-    });
-    res.status(200);
-    res.send(files);
-  });
+app.get("/file/:id", (req, res) => {
+  const { id } = req.params;
+  res.sendFile(__dirname + '/uploads/' + id);
 });
 
 app.post("/login", (req, res) => {
-  console.log(req.body);
   const { username, password} = req.body;
   if (!username || !password) {
     res.status(401);
@@ -72,10 +66,8 @@ app.post('/upload',function(req, res) {
   upload(req, res, function (err) {
     if (err instanceof multer.MulterError) {
         return res.status(500).json(err)
-      // A Multer error occurred when uploading.
     } else if (err) {
         return res.status(500).json(err)
-      // An unknown error occurred when uploading.
     } 
     
     return res.status(200).send(req.file)

@@ -1,3 +1,4 @@
+import axios from 'axios';
 import * as React from 'react';
 import Pricing from './Pricing';
 
@@ -7,6 +8,8 @@ export class Ground extends React.PureComponent {
     this.state = {
       loggedIn: false,
       currIdx: 0,
+      files: [],
+      currFile: '',
     }
   }
 
@@ -20,6 +23,20 @@ export class Ground extends React.PureComponent {
     } else {
       window.location.href = '/';
     }
+  }
+
+  componentDidMount() {
+    axios.get("http://localhost:3001/files")
+      .then(res => {
+        console.log(res);
+        this.setState({
+          ...this.state,
+          files: res.data
+        })
+      })
+      .catch(err => {
+        console.log(err);
+      })
   }
 
   // componentDidUpdate(prevProps) {
@@ -38,13 +55,27 @@ export class Ground extends React.PureComponent {
       currIdx: idx
     });
   }
+  updateCurrFile = (fileName) => {
+    this.setState({
+      ...this.state,
+      currFile: fileName,
+      currIdx: 2,
+    });
+  } 
   render () {
     if (!this.state.loggedIn) {
       return <h1>Loading...</h1>
     }
     return (
       <div>
-        <Pricing currIdx={this.state.currIdx} updateIdx={this.updateIdx} onLoggedOut={this.onLoggedOut} />
+        <Pricing
+          files={this.state.files}
+          currIdx={this.state.currIdx}
+          updateIdx={this.updateIdx}
+          onLoggedOut={this.onLoggedOut}
+          updateCurrFile={this.updateCurrFile}
+          currFile={this.state.currFile}
+        />
       </div>
     );
   }
