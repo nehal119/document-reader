@@ -13,7 +13,7 @@ export class Ground extends React.PureComponent {
     };
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const item = window.localStorage.getItem("document-reader");
     if (
       item &&
@@ -33,7 +33,6 @@ export class Ground extends React.PureComponent {
     axios
       .get("http://localhost:3001/files")
       .then((res) => {
-        console.log(res);
         this.setState({
           ...this.state,
           files: res.data,

@@ -4,7 +4,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
-import theme from "./theme";
+import theme from "./components/Theme";
 import "react-toastify/dist/ReactToastify.css";
 
 ReactDOM.render(

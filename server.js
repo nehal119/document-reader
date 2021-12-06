@@ -14,17 +14,6 @@ app.use(compression());
 
 app.use(cors("*"));
 
-var storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "uploads");
-  },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + "-" + file.originalname);
-  },
-});
-
-var upload = multer({ storage: storage }).array("file");
-
 app.get("/", (req, res) => {
   res.status(200);
   res.send("Server is up and running");
@@ -59,6 +48,17 @@ app.post("/login", (req, res) => {
   return;
 });
 
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads");
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
+
+var upload = multer({ storage: storage }).array("file");
+
 app.post("/upload", function (req, res) {
   upload(req, res, function (err) {
     if (err instanceof multer.MulterError) {
@@ -66,7 +66,6 @@ app.post("/upload", function (req, res) {
     } else if (err) {
       return res.status(500).json(err);
     }
-
     return res.status(200).send(req.file);
     // Everything went fine.
   });
