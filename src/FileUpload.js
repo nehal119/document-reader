@@ -13,22 +13,17 @@ class FileUpload extends Component {
       }
   }
   checkMimeType=(event)=>{
-    //getting file object
     let files = event.target.files 
-    //define message container
     let err = []
-    // list allow mime type
-   const types = ['image/png', 'image/jpeg', 'image/gif']
+  //  const types = ['image/png', 'image/jpeg', 'image/gif']
+   const types = ['application/pdf']
     // loop access array
     for(var x = 0; x<files.length; x++) {
-     // compare file type find doesn't matach
          if (types.every(type => files[x].type !== type)) {
-         // create error message and assign to container   
          err[x] = files[x].type+' is not a supported format\n';
        }
      };
-     for(var z = 0; z<err.length; z++) {// if message not same old that mean has error 
-         // discard selected file
+     for(var z = 0; z<err.length; z++) {
         toast.error(err[z])
         event.target.value = null
     }
@@ -53,8 +48,7 @@ class FileUpload extends Component {
    err[x] = files[x].type+'is too large, please pick a smaller file\n';
  }
 };
-for(var z = 0; z<err.length; z++) {// if message not same old that mean has error 
-  // discard selected file
+for(var z = 0; z<err.length; z++) {
  toast.error(err[z])
  event.target.value = null
 }
@@ -63,7 +57,6 @@ return true;
 onChangeHandler=event=>{
   var files = event.target.files
   if(this.maxSelectFile(event) && this.checkMimeType(event) &&    this.checkFileSize(event)){ 
-  // if return true allow to setState
      this.setState({
      selectedFile: files,
      loaded:0
@@ -82,10 +75,10 @@ onChangeHandler=event=>{
         })
       },
     })
-      .then(res => { // then print response status
+      .then(res => {
         toast.success('upload success')
       })
-      .catch(err => { // then print response status
+      .catch(err => {
         toast.error('upload fail')
       })
     }

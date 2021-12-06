@@ -1,6 +1,6 @@
 import axios from 'axios';
 import * as React from 'react';
-import Pricing from './Pricing';
+import Home from './Home';
 
 export class Ground extends React.PureComponent {
   constructor(props) {
@@ -68,7 +68,7 @@ export class Ground extends React.PureComponent {
     }
     return (
       <div>
-        <Pricing
+        <Home
           files={this.state.files}
           currIdx={this.state.currIdx}
           updateIdx={this.updateIdx}

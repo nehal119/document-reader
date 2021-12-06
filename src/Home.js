@@ -32,7 +32,7 @@ function Copyright(props) {
   );
 }
 
-export default function Pricing(props) {
+export default function Home(props) {
   const onLoggedOut = () => {
     window.localStorage.removeItem("document-reader");
     toast.success('User logged out')

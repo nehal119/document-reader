@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Routes, Route, Link } from "react-router-dom";
 import SignIn from './SignIn';
-import Pricing from './Pricing';
 import { Ground } from './Ground';
 
 export default function App() {
