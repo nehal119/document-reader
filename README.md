@@ -1,8 +1,14 @@
 # Document Reader
 
-Install it and run:
+Start with:
 
+> Client
 ```sh
-npm install
-npm start
+yarn
+yarn start
+```
+
+> Server
+```sh
+node server.js
 ```
