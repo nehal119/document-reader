@@ -1,14 +1,39 @@
-# Document Reader
+Document Reader
+===============
 
-Start with:
+Document Reader is a web app to access documents from anywhere.
 
-> Client
-```sh
-yarn
-yarn start
-```
+Currently it supports only pdf files.
 
-> Server
-```sh
-node server.js
-```
+It embeds a HTTP server that implements API and serves a simple HTML page that uses them through HTTP requests.
+
+Authentication is done using hardcoded data but the logic can be extended to implement auth0, firebase or simple JWT + Database
+
+Default username: admin, password: admin
+
+Build :
+=======
+Client
+------
+  ```sh
+  yarn install
+  yarn start
+  ```
+
+Server
+------
+  ```sh
+  yarn server
+  ```
+
+Dependencies :
+==============
+* React 17
+* Node JS 14+
+
+Milestone :
+==============
+* Editing files
+* Merging files
+* Highlight within file
+* Sharing files externally
