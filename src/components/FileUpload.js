@@ -22,10 +22,25 @@ class FileUpload extends Component {
       fileName: '',
     };
   }
+  checkFileSize = (files) => {
+    let size = 2000000 
+    let err = []; 
+    for(var x = 0; x < files.length; x++) {
+      if (files[x].size > size) {
+        err[x] = files[x].type+'is too large, please pick a smaller file\n';
+      }
+    }
+    for(var z = 0; z<err.length; z++) {
+      toast.error(err[z])
+    }
+    if (err.length > 0) {
+      return false;
+    }
+    return true;
+  }
   checkMimeType = (files, cover = false) => {
     let err = [];
     const types = cover ? ['image/png', 'image/jpeg', 'image/gif'] : ["application/pdf"];
-    //  const types = ['image/png', 'image/jpeg', 'image/gif']
     // loop access array
     for (var x = 0; x < files.length; x++) {
       if (types.every((type) => files[x].type !== type)) {
@@ -114,7 +129,7 @@ class FileUpload extends Component {
             if (!files) {
               return;
             }
-            if (this.checkMimeType(files)) {
+            if (this.checkMimeType(files) && this.checkFileSize(files)) {
               this.setState({
                 ...this.state,
                 selectedFile: files,
@@ -140,7 +155,7 @@ class FileUpload extends Component {
             if (!files) {
               return;
             }
-            if (this.checkMimeType(files, true)) {
+            if (this.checkMimeType(files, true) && this.checkFileSize(files)) {
               this.setState({
                 ...this.state,
                 selectedCover: files,
