@@ -29,7 +29,7 @@ exports.user_add = function (req, res) {
       res.status(400);
       return;
     }
-    res.status(200).json({ success: true, message: "User added", item: newUser });
+    res.status(200).json({ success: true, data: newUser._id });
   });
 };
 
