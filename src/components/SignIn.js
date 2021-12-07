@@ -44,15 +44,16 @@ export default function SignIn() {
         username: data.get("email"),
         password: data.get("password"),
       })
-      .then(() => {
-        window.localStorage.setItem(
-          "document-reader",
-          JSON.stringify(
-            "DjQ#THUWvFBaBh%55AVZWmUTYr$2haJ!es@rMzaXWaQfRCEi*SzpPD6i3h#%BGHYepPpHE@97NhE$VdWhGHuQUEM&$GMM5$35CGv!DT$Tj5$$weFAet5Lbtg42TWWku3"
-          )
-        );
-        toast.success("Success!!!");
-        window.location.href = "/home";
+      .then(({data}) => {
+        console.log(data);
+        if (data.success) {
+          window.localStorage.setItem(
+            "document-reader",
+            data.data
+          );
+          toast.success("Success!!!");
+          window.location.href = "/home";
+        }
       })
       .catch(() => {
         window.localStorage.removeItem("document-reader");

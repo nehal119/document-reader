@@ -42,8 +42,9 @@ export default function Home(props) {
     window.localStorage.removeItem("document-reader");
     toast.success("User logged out");
     props.onLoggedOut();
+    window.location.href = "/";
   };
-
+  console.log(props.files);
   return (
     <React.Fragment>
       <GlobalStyles
@@ -119,7 +120,7 @@ export default function Home(props) {
               <Grid item key={idx} xs={12} sm={6} md={4}>
                 <Card>
                   <CardHeader
-                    title={file.substr(0, 10) + "..."}
+                    title={file.name}
                     // subheader={tier.subheader}
                     titleTypographyProps={{ align: "center" }}
                     subheaderTypographyProps={{
@@ -139,7 +140,8 @@ export default function Home(props) {
                       //   // 16:9
                       //   pt: '56.25%',
                       // }}
-                      image="https://source.unsplash.com/random"
+                      // image="https://source.unsplash.com/random"
+                      image={"http://localhost:3001/file/" + file.cover}
                       alt="random"
                     />
                   </CardContent>
@@ -147,7 +149,7 @@ export default function Home(props) {
                     <Button
                       fullWidth
                       variant="outlined"
-                      onClick={() => props.updateCurrFile(file)}
+                      onClick={() => props.updateCurrFile(file.file)}
                     >
                       Open
                     </Button>
@@ -155,7 +157,7 @@ export default function Home(props) {
                 </Card>
               </Grid>
             ))}
-          {props.currIdx === 1 && <FileUpload />}
+          {props.currIdx === 1 && <FileUpload id={props.id} />}
           {props.currIdx === 2 && <Reader currFile={props.currFile} />}
         </Grid>
       </Container>

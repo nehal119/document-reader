@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { Component } from "react";
 import axios from "axios";
 import { Progress } from "reactstrap";
@@ -21,10 +22,10 @@ class FileUpload extends Component {
       fileName: '',
     };
   }
-  checkMimeType = (files) => {
+  checkMimeType = (files, cover = false) => {
     let err = [];
+    const types = cover ? ['image/png', 'image/jpeg', 'image/gif'] : ["application/pdf"];
     //  const types = ['image/png', 'image/jpeg', 'image/gif']
-    const types = ["application/pdf"];
     // loop access array
     for (var x = 0; x < files.length; x++) {
       if (types.every((type) => files[x].type !== type)) {
@@ -58,8 +59,9 @@ class FileUpload extends Component {
       })
       .then(() => {
         toast.success("upload success");
+        // /add/file/:id
         axios
-        .post("http://localhost:3001/updateuser", {
+        .post(("http://localhost:3001/add/file/" + this.props.id), {
           name: this.state.fileName,
           cover: this.state.selectedCover[0].name,
           file: this.state.selectedFile[0].name,
@@ -139,7 +141,7 @@ class FileUpload extends Component {
             if (!files) {
               return;
             }
-            if (this.checkMimeType(files)) {
+            if (this.checkMimeType(files, true)) {
               this.setState({
                 ...this.state,
                 selectedCover: files,

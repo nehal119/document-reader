@@ -43,25 +43,28 @@ app.get("/file/:id", (req, res) => {
   res.sendFile(__dirname + "/uploads/" + id);
 });
 
-app.post("/login", (req, res) => {
-  const { username, password } = req.body;
-  if (!username || !password) {
-    res.status(401);
-    res.send("Access denied");
-    return;
-  }
-  if (username === "admin" && password === "admin") {
-    res.status(200);
-    res.send("User logged in");
-    return;
-  }
-  res.status(401);
-  res.send("Access denied");
-  return;
-});
 
+// app.post("/login", (req, res) => {
+//   const { username, password } = req.body;
+//   if (!username || !password) {
+//     res.status(401);
+//     res.send("Access denied");
+//     return;
+//   }
+//   if (username === "admin" && password === "admin") {
+//     res.status(200);
+//     res.send("User logged in");
+//     return;
+//   }
+//   res.status(401);
+//   res.send("Access denied");
+//   return;
+// });
+
+app.post("/login", userController.login);
 app.post("/add/user", userController.user_add);
 app.post("/add/file/:id", userController.file_add);
+app.get("/list/files/:id", userController.list_files);
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {

@@ -1,5 +1,22 @@
 const User = require("../schema/user");
 
+exports.login = function (req, res) {
+  User.find(req.body)
+    .then((user) => {
+      if (user.length > 0) {
+        delete user[0].username;
+        delete user[0].password;
+        res.status(200).json({success: true, data: user[0]._id});
+        return;
+      }
+      res.status(200).json({ success: false, data: 'User not found!'});
+      return;
+    })
+    .catch((err) => {
+      return res.status(401).json(err);
+    });
+};
+
 exports.user_add = function (req, res) {
   const { username, password } = req.body;
   const newUser = new User({
@@ -22,7 +39,6 @@ exports.file_add = function (req, res) {
       res.status(400).json(err)
       return;
     }
-    console.log(user);
     user.files.push(req.body);
     // user.markModified('brackets.rounds');
     user.save().then( () => {
@@ -32,6 +48,18 @@ exports.file_add = function (req, res) {
       res.status(400).json(err)
     })
   });
+};
+
+exports.list_files = function (req, res) {
+  User.findById(req.params.id)
+    .then((user) => {
+      delete user.username;
+      delete user.password;
+      res.send(user.files);
+    })
+    .catch((err) => {
+      return res.send(err);
+    });
 };
 
 // exports.users_list = function (req, res) {
