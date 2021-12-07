@@ -9,8 +9,6 @@ It embeds a HTTP server that implements API and serves a simple HTML page that u
 
 Authentication is done using hardcoded data but the logic can be extended to implement auth0, firebase or simple JWT + Database
 
-Default username: admin, password: admin
-
 Build :
 =======
 Client

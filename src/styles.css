@@ -54,3 +54,7 @@
 .Example {
   margin: auto !important;
 }
+
+.dropzone-container{
+  margin: auto !important;
+}

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Routes, Route } from "react-router-dom";
-import SignIn from "./SignIn";
-import { Ground } from "./Ground";
+import { SignIn } from "./components/SignIn";
+import { Ground } from "./components/Ground";
 
 export default function App() {
   return (

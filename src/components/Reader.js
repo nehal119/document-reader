@@ -1,8 +1,9 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from "react";
 import { Document, Page } from "react-pdf/dist/esm/entry.webpack";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
 
-import "./styles.css";
+import "../styles.css";
 
 const options = {
   cMapUrl: "cmaps/",
@@ -10,6 +11,7 @@ const options = {
 };
 
 export default function Reader(props) {
+  // eslint-disable-next-line no-unused-vars
   const [file, setFile] = useState(
     "http://localhost:3001/file/" + props.currFile
   );

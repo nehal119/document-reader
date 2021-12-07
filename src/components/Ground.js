@@ -10,30 +10,27 @@ export class Ground extends React.PureComponent {
       currIdx: 0,
       files: [],
       currFile: "",
+      id: '',
     };
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const item = window.localStorage.getItem("document-reader");
-    if (
-      item &&
-      JSON.parse(item) ===
-        "DjQ#THUWvFBaBh%55AVZWmUTYr$2haJ!es@rMzaXWaQfRCEi*SzpPD6i3h#%BGHYepPpHE@97NhE$VdWhGHuQUEM&$GMM5$35CGv!DT$Tj5$$weFAet5Lbtg42TWWku3"
-    ) {
+    if (item) {
       this.setState({
         ...this.state,
         loggedIn: true,
+        id: item,
       });
     } else {
       window.location.href = "/";
     }
   }
-
+  // /list/files/:id
   componentDidMount() {
     axios
-      .get("http://localhost:3001/files")
+      .get("http://localhost:3001/list/files/" + this.state.id)
       .then((res) => {
-        console.log(res);
         this.setState({
           ...this.state,
           files: res.data,
@@ -80,6 +77,7 @@ export class Ground extends React.PureComponent {
           onLoggedOut={this.onLoggedOut}
           updateCurrFile={this.updateCurrFile}
           currFile={this.state.currFile}
+          id={this.state.id}
         />
       </div>
     );

@@ -15,7 +15,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-function Copyright(props) {
+export function Copyright(props) {
   return (
     <Typography
       variant="body2"
@@ -35,7 +35,11 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function SignIn() {
+export function SignIn() {
+  const [signup, setSignup] = React.useState(false);
+  const onSignup = (mode) => {
+    setSignup(mode);    
+  }
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -44,15 +48,39 @@ export default function SignIn() {
         username: data.get("email"),
         password: data.get("password"),
       })
-      .then(() => {
-        window.localStorage.setItem(
-          "document-reader",
-          JSON.stringify(
-            "DjQ#THUWvFBaBh%55AVZWmUTYr$2haJ!es@rMzaXWaQfRCEi*SzpPD6i3h#%BGHYepPpHE@97NhE$VdWhGHuQUEM&$GMM5$35CGv!DT$Tj5$$weFAet5Lbtg42TWWku3"
-          )
-        );
-        toast.success("Success!!!");
-        window.location.href = "/home";
+      .then(({data}) => {
+        if (data.success) {
+          window.localStorage.setItem(
+            "document-reader",
+            data.data
+          );
+          toast.success("Success!!!");
+          window.location.href = "/home";
+        }
+      })
+      .catch(() => {
+        window.localStorage.removeItem("document-reader");
+        toast.error("Authentication error");
+      });
+  };
+
+  const handleSubmitSignup = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    axios
+      .post("http://localhost:3001/add/user", {
+        username: data.get("email"),
+        password: data.get("password"),
+      })
+      .then(({data}) => {
+        if (data.success) {
+          window.localStorage.setItem(
+            "document-reader",
+            data.data
+          );
+          toast.success("Success!!!");
+          window.location.href = "/home";
+        }
       })
       .catch(() => {
         window.localStorage.removeItem("document-reader");
@@ -65,7 +93,7 @@ export default function SignIn() {
       <ToastContainer />
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-        <Box
+        {!signup && <Box
           sx={{
             marginTop: 8,
             display: "flex",
@@ -90,7 +118,7 @@ export default function SignIn() {
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label="Username"
               name="email"
               autoComplete="email"
               autoFocus
@@ -124,13 +152,70 @@ export default function SignIn() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="#" variant="body2" onClick={() => onSignup(true)}>
                   {"Sign Up?"}
                 </Link>
               </Grid>
             </Grid>
           </Box>
-        </Box>
+        </Box>}
+        {signup && <Box
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign up
+          </Typography>
+          <Box
+            component="form"
+            onSubmit={handleSubmitSignup}
+            noValidate
+            sx={{ mt: 1 }}
+          >
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Username"
+              name="email"
+              autoComplete="email"
+              autoFocus
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Sign Up
+            </Button>
+            <Grid container>
+              <Grid item>
+                <Link href="#" variant="body2" onClick={() => onSignup(false)}>
+                  {"Sign In?"}
+                </Link>
+              </Grid>
+            </Grid>
+          </Box>
+        </Box>}
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
