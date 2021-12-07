@@ -11,31 +11,13 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Grid from "@mui/material/Grid";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
 import GlobalStyles from "@mui/material/GlobalStyles";
 import Container from "@mui/material/Container";
 import CardMedia from "@mui/material/CardMedia";
 import { toast, ToastContainer } from "react-toastify";
 import FileUpload from "./FileUpload";
 import Reader from "./Reader";
-
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://github.com/nehal119/">
-        Nehal Ahmad
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import { Copyright } from './SignIn';
 
 export default function Home(props) {
   const onLoggedOut = () => {
@@ -44,7 +26,6 @@ export default function Home(props) {
     props.onLoggedOut();
     window.location.href = "/";
   };
-  console.log(props.files);
   return (
     <React.Fragment>
       <GlobalStyles
@@ -60,7 +41,7 @@ export default function Home(props) {
       >
         <Toolbar sx={{ flexWrap: "wrap" }}>
           <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
-            Document Reader
+            Doc Reader
           </Typography>
           <nav>
             {props.currIdx === 0 && (
@@ -119,20 +100,6 @@ export default function Home(props) {
               // Enterprise card is full width at sm breakpoint
               <Grid item key={idx} xs={12} sm={6} md={4}>
                 <Card>
-                  <CardHeader
-                    title={file.name}
-                    // subheader={tier.subheader}
-                    titleTypographyProps={{ align: "center" }}
-                    subheaderTypographyProps={{
-                      align: "center",
-                    }}
-                    sx={{
-                      backgroundColor: (theme) =>
-                        theme.palette.mode === "light"
-                          ? theme.palette.grey[200]
-                          : theme.palette.grey[700],
-                    }}
-                  />
                   <CardContent>
                     <CardMedia
                       component="img"
@@ -145,6 +112,20 @@ export default function Home(props) {
                       alt="random"
                     />
                   </CardContent>
+                  <CardHeader
+                    // title={file.name}
+                    subheader={file.name}
+                    titleTypographyProps={{ align: "center" }}
+                    subheaderTypographyProps={{
+                      align: "center",
+                    }}
+                    // sx={{
+                    //   backgroundColor: (theme) =>
+                    //     theme.palette.mode === "light"
+                    //       ? theme.palette.grey[200]
+                    //       : theme.palette.grey[700],
+                    // }}
+                  />
                   <CardActions>
                     <Button
                       fullWidth

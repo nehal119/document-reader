@@ -41,7 +41,6 @@ class FileUpload extends Component {
     return true;
   };
   onClickHandler = () => {
-    console.log(this.state);
     const data = new FormData();
     // for (var x = 0; x < this.state.selectedFile.length; x++) {
     //   data.append("file", this.state.selectedFile[x]);

@@ -15,7 +15,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-function Copyright(props) {
+export function Copyright(props) {
   return (
     <Typography
       variant="body2"
@@ -35,7 +35,7 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function SignIn() {
+export function SignIn() {
   const [signup, setSignup] = React.useState(false);
   const onSignup = (mode) => {
     setSignup(mode);    
@@ -118,7 +118,7 @@ export default function SignIn() {
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label="Username"
               name="email"
               autoComplete="email"
               autoFocus
@@ -184,7 +184,7 @@ export default function SignIn() {
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label="Username"
               name="email"
               autoComplete="email"
               autoFocus
