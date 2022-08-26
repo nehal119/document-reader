@@ -1,4 +1,4 @@
-Document Reader
+Document Reader (MCA minor project)
 ===============
 
 Document Reader is a web app to access documents from anywhere.
